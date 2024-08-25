@@ -1,4 +1,4 @@
-namespace Notes;
+namespace Notes.Views;
 
 public partial class AboutPage : ContentPage
 {
@@ -9,6 +9,9 @@ public partial class AboutPage : ContentPage
 
 	private async void LearnMoreBtn_Clicked(object sender, EventArgs e)
 	{
-		await Launcher.Default.OpenAsync("https://kalacademy.org");
+		if (BindingContext is Models.About about)
+		{
+			await Launcher.Default.OpenAsync(about.MoreInfoUrl);
+		}
     }
 }
