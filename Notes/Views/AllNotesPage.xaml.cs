@@ -20,9 +20,12 @@ public partial class AllNotesPage : ContentPage
 	private async void notesCollection_SelectionChanged(object sender, 
 		SelectionChangedEventArgs e)
 	{
-		var note = (Models.Note)e.CurrentSelection[0];
-		await Shell.Current.GoToAsync
-			($"{nameof(NotePage)}?{nameof(NotePage.ItemId)}={note.Filename}");
-		notesCollection.SelectedItem = null;
+		if (e.CurrentSelection.Count != 0)
+		{
+			var note = (Models.Note)e.CurrentSelection[0];
+			await Shell.Current.GoToAsync
+				($"{nameof(NotePage)}?{nameof(NotePage.ItemId)}={note.Filename}");
+			notesCollection.SelectedItem = null;
+		}
     }
 }
