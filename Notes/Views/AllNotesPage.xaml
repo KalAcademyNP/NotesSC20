@@ -4,7 +4,7 @@
              x:Class="Notes.Views.AllNotesPage"
              Title="AllNotesPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="ToolbarItem_Clicked"
+        <ToolbarItem x:Name="Add" Text="Add" Clicked="Add_Clicked"
                      IconImageSource="{FontImage Glyph='+', Color=Black, Size=22}" />
     </ContentPage.ToolbarItems>
 

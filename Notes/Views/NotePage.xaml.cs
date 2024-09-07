@@ -1,26 +1,34 @@
 namespace Notes.Views;
 
+[QueryProperty(nameof(ItemId), nameof(ItemId))]
 public partial class NotePage : ContentPage
 {
-	public NotePage()
+    public string ItemId { 
+		set { LoadNote(value); } }
+    public NotePage()
 	{
 		InitializeComponent();
 		var randomFileName = $"{Path.GetRandomFileName()}.notes.txt";
 		LoadNote(Path.Combine(FileSystem.AppDataDirectory, randomFileName));
 	}
 
-	private void SaveButton_Clicked(object sender, EventArgs e)
+	private async void SaveButton_Clicked(object sender, EventArgs e)
 	{
-		File.WriteAllText(fileName, TextEditor.Text);
+		if(BindingContext is Models.Note note)
+			File.WriteAllText(note.Filename, TextEditor.Text);
+
+		await Shell.Current.GoToAsync("..");
     }
 
-	private void DeleteButton_Clicked(object sender, EventArgs e)
+	private async void DeleteButton_Clicked(object sender, EventArgs e)
 	{
-		if (File.Exists(fileName))
-			File.Delete(fileName);
-
-		TextEditor.Text = string.Empty;
-    }
+		if (BindingContext is Models.Note note)
+		{
+			if (File.Exists(note.Filename))
+				File.Delete(note.Filename);
+		}
+		await Shell.Current.GoToAsync("..");
+	}
 
 	private void LoadNote(string fileName)
 	{
